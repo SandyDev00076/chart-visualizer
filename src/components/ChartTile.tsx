@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Bar,
   BarChart,
@@ -25,14 +25,32 @@ const ChartTile = ({ chartIndex, chart }: Props) => {
   const dispatch = useAppDispatch();
   const [tipVisibility, showTip] = useState(false);
 
+  /**
+   * Written this logic to generate the band of colors
+   * for this chart just once on render, to prevent all the colors getting
+   * changed on every input update.
+   */
+  const bandOfColors = useMemo(() => {
+    return [...Array(chart.elements.length)].map(() => generateRandomColor());
+  }, [chart.elements.length]);
+
+  /**
+   * Setting up the data that I need to feed recharts
+   * UI components
+   */
   const chartValues = chart.elements.map((ele, index) => ({
     name: index + 1,
     value: ele,
-    fill: generateRandomColor(),
+    fill: bandOfColors[index],
   }));
 
   function onValuesSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    /**
+     * Taking all but last one (the hidden input with type - submit) elements
+     * and forming it into an array
+     *
+     */
     const inputs = Array.from(e.currentTarget.elements).slice(
       0,
       -1
@@ -85,6 +103,7 @@ const ChartTile = ({ chartIndex, chart }: Props) => {
               />
             </div>
           ))}
+          {/* Hidden submit input so that values are recorded in onSubmit listener on pressing Enter */}
           <input type="submit" style={{ display: "none" }} />
         </form>
         {tipVisibility && (
