@@ -1,11 +1,26 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import chartsReducer from "../redux/charts/chartsSlice";
+import chartsReducer, { ChartsStateType } from "../redux/charts/chartsSlice";
+
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "charts",
+  storage,
+};
+
+const persistedReducer = persistReducer<ChartsStateType>(
+  persistConfig,
+  chartsReducer
+);
 
 export const store = configureStore({
   reducer: {
-    charts: chartsReducer,
+    charts: persistedReducer,
   },
 });
+
+export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
