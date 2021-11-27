@@ -1,57 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useEffect } from "react";
+import { getCharts } from "./api/chartsAPI";
+import styles from "./App.module.scss";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { RootState } from "./app/store";
+import ChartTile from "./components/ChartTile";
+import { setCharts } from "./redux/charts/chartsSlice";
+import { ChartEntry } from "./types/chartEntry";
 
 function App() {
+  const dispatch = useAppDispatch();
+  const chartsData = useAppSelector((state: RootState) => state.charts.entries);
+  console.log(chartsData);
+
+  useEffect(() => {
+    async function getChartValues() {
+      dispatch(
+        setCharts({
+          charts: (await getCharts()) as ChartEntry[],
+        })
+      );
+    }
+    getChartValues();
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <section className={styles.container}>
+      <div className={styles.intro}>
+        <h2>Chart Visualizer</h2>
+        <h1>
+          By <strong>Sanjeet Tiwari</strong>, via <strong>Recharts</strong>
+        </h1>
+      </div>
+      {chartsData.map((chart, index) => (
+        <ChartTile key={index} chartIndex={index} chart={chart} />
+      ))}
+    </section>
   );
 }
 

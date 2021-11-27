@@ -1,0 +1,22 @@
+@use "./styles/shared";
+
+.container {
+  @extend %page;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro {
+  h2 {
+    font-size: 2rem;
+    color: var(--primary);
+  }
+
+  h1 {
+    font-weight: 400;
+    font-size: 1.2rem;
+  }
+
+  margin: 16px 0 48px;
+}
