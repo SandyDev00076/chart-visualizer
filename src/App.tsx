@@ -6,6 +6,7 @@ import { RootState } from "./app/store";
 import ChartTile from "./components/ChartTile";
 import { setCharts } from "./redux/charts/chartsSlice";
 import { ChartEntry } from "./types/chartEntry";
+import { checkWhetherStateIsPersisted } from "./utils";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ function App() {
         })
       );
     }
-    getChartValues();
+    !checkWhetherStateIsPersisted() && getChartValues();
   }, [dispatch]);
 
   return (
