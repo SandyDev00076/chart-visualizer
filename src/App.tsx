@@ -34,6 +34,16 @@ function App() {
       {chartsData.map((chart, index) => (
         <ChartTile key={index} chartIndex={index} chart={chart} />
       ))}
+      <footer>
+        If you want to know more about me, check out my website -{" "}
+        <a
+          href="https://sanjeettiwari.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Sanjeet Tiwari
+        </a>
+      </footer>
     </section>
   );
 }
