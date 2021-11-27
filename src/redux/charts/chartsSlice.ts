@@ -29,8 +29,6 @@ export const chartsSlice = createSlice({
       state.entries = chartsCopy;
     },
     setCharts: (state, action: PayloadAction<SetChartPayload>) => {
-      console.log("set charts");
-      console.log(action.payload.charts);
       state.entries = [...action.payload.charts];
     },
   },

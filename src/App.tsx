@@ -10,7 +10,6 @@ import { ChartEntry } from "./types/chartEntry";
 function App() {
   const dispatch = useAppDispatch();
   const chartsData = useAppSelector((state: RootState) => state.charts.entries);
-  console.log(chartsData);
 
   useEffect(() => {
     async function getChartValues() {

@@ -76,12 +76,14 @@ const ChartTile = ({ chartIndex, chart }: Props) => {
         <h1>Inputs</h1>
         <form className={styles.inputs} onSubmit={onValuesSubmit}>
           {chart.elements.map((ele, index) => (
-            <input
-              key={index}
-              className={styles.inp}
-              defaultValue={ele}
-              onChange={() => showTip(true)}
-            />
+            <div key={index} className={styles.inputBox}>
+              <label className={styles.inpLabel}>{index + 1}</label>
+              <input
+                className={styles.inp}
+                defaultValue={ele}
+                onChange={() => showTip(true)}
+              />
+            </div>
           ))}
           <input type="submit" style={{ display: "none" }} />
         </form>
