@@ -27,7 +27,8 @@ function App() {
       <div className={styles.intro}>
         <h2>Chart Visualizer</h2>
         <h1>
-          By <strong>Sanjeet Tiwari</strong>, via <strong>Recharts</strong>
+          By <strong>Sanjeet Tiwari</strong>, via <strong>Redux</strong>,{" "}
+          <strong>Recharts</strong>
         </h1>
       </div>
       {chartsData.map((chart, index) => (
